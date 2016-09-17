@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "app-webserver": "^0.1.9",
-    "devebot": "^0.1.22"
+    "devebot": "^0.1.22",
+    "jsonwebtoken": "^7.1.9"
   }
 }
