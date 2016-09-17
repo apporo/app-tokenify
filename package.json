@@ -1,0 +1,23 @@
+{
+  "name": "app-tokenify",
+  "version": "0.1.0",
+  "description": "Devebot Token-based Authentication Layerware",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "devebot",
+    "devebot-plugin"
+  ],
+  "author": "apporo",
+  "license": "ISC",
+  "peerDependencies": {
+    "app-webserver": "^0.1.9",
+    "devebot": "^0.1.22"
+  },
+  "dependencies": {
+    "app-webserver": "^0.1.9",
+    "devebot": "^0.1.22"
+  }
+}
