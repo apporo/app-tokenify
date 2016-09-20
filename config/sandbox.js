@@ -1,6 +1,7 @@
 module.exports = {
   plugins: {
     appTokenify: {
+      enabled: true,
       jwt: {
         tokenHeaderName: 'x-access-token',
         tokenQueryName: 'token',
