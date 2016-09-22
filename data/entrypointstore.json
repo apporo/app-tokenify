@@ -1,0 +1,12 @@
+{
+	"entrypoints": [
+		{
+			"key": "sysops",
+			"secret": "$2a$10$nj5kvtPpcoaRDptXdrHZge3lkNToIGVLYrWWTjZjdFAzFGkgDJnye"
+		},
+		{
+			"key": "devops",
+			"secret": "$2a$10$lx6Ghm1DDdiUYI5KYd2eIe25PsexdP2B2S8h6PxY4sZSSLRTZrbsG"
+		}
+	]
+}
