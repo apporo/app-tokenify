@@ -1,6 +1,6 @@
 {
   "name": "app-tokenify",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Devebot Token-based Authentication Layerware",
   "main": "index.js",
   "scripts": {
