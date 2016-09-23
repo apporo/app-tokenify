@@ -30,7 +30,39 @@ module.exports = {
           {
             enabled: false,
             url: 'http://localhost:3000/auth',
-            authType: 'none',
+            auth: {
+              type: 'none',
+              config: {
+                basic: {
+                  user: 'agent',
+                  pass: 'secret'
+                },
+                digest: {
+                  user: 'agent',
+                  pass: 'secret'
+                },
+                bearer: {
+                  token: 'bearerToken string or generator function'
+                }
+              }
+            },
+            ssl: {
+              type: 'none',
+              config: {
+                cert: {
+                  certFile: require('path').join(__dirname, '../data/ssl/client-cert.pem'),
+                  keyFile: require('path').join(__dirname, '../data/ssl/client-key.pem'),
+                  passphrase: 'secure4keyfile',
+                  securityOptions: 'SSL_OP_NO_SSLv3'
+                },
+                certserverside: {
+                  caFile: require('path').join(__dirname, '../data/ssl/ca.pem'),
+                  certFile: require('path').join(__dirname, '../data/ssl/server-cert.pem'),
+                  keyFile: require('path').join(__dirname, '../data/ssl/server-key.pem'),
+                  passphrase: 'secure4keyfile'
+                }
+              }
+            },
             transform: function(response) { return response; }
           }
         ]

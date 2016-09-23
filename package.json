@@ -21,6 +21,6 @@
     "bcryptjs": "^2.3.0",
     "devebot": "^0.1.22",
     "jsonwebtoken": "^7.1.9",
-    "superagent": "^2.3.0"
+    "request": "^2.75.0"
   }
 }
