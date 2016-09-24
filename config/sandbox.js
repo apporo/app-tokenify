@@ -11,6 +11,12 @@ module.exports = {
         ignoreExpiration: false,
         secretkey: 'sup3rs3cr3tp4ssw0rd'
       },
+      kst: {
+        keyHeaderName: 'Auth-Key',
+        nonceHeaderName: 'Auth-Nonce',
+        timestampHeaderName: 'Auth-Timestamp',
+        signatureHeaderName: 'Auth-Signature'
+      },
       fieldNameRef: {
         scope: 'realm',
         key: 'key',
@@ -22,6 +28,11 @@ module.exports = {
           {
             key: 'master',
             secret: '$2a$10$L9t1sDIP4u2xcKGnte8D7uWhzPDRUTPSKD1AFWVEw833/cqp0gyPC'
+          },
+          {
+            key: 'nobody',
+            secret: '$2a$10$L9t1sDIP4u2xcKGnte8D7uWhzPDRUTPSKD1AFWVEw833/cqp0gyPC',
+            enabled: false
           }
         ]
       },
