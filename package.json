@@ -1,7 +1,7 @@
 {
   "name": "app-tokenify",
-  "version": "0.1.3",
-  "description": "Devebot Token-based Authentication Layerware",
+  "version": "0.1.4",
+  "description": "Devebot token-based authentication layerware",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

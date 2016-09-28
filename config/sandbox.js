@@ -27,7 +27,8 @@ module.exports = {
         entrypoints: [
           {
             key: 'master',
-            secret: '$2a$10$L9t1sDIP4u2xcKGnte8D7uWhzPDRUTPSKD1AFWVEw833/cqp0gyPC'
+            secret: '$2a$10$L9t1sDIP4u2xcKGnte8D7uWhzPDRUTPSKD1AFWVEw833/cqp0gyPC',
+            hint: 'z********xs**-rs-**-t'
           },
           {
             key: 'nobody',
