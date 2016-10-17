@@ -22,6 +22,7 @@
     "app-webserver": "^0.1.9",
     "bcryptjs": "^2.3.0",
     "devebot": "^0.1.22",
+    "express-basic-auth": "^0.1.3",
     "jsonwebtoken": "^7.1.9",
     "request": "^2.75.0"
   },

@@ -3,6 +3,9 @@ module.exports = {
     appTokenify: {
       enabled: true,
       contextPath: '/tokenify',
+      httpauth: {
+        protectedPaths: []
+      },
       jwt: {
         tokenHeaderName: 'x-access-token',
         tokenQueryName: 'token',
