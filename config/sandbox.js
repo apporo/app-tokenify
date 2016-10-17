@@ -3,6 +3,7 @@ module.exports = {
     appTokenify: {
       enabled: true,
       contextPath: '/tokenify',
+      sessionObjectName: 'tokenify',
       httpauth: {
         protectedPaths: []
       },
