@@ -8,14 +8,15 @@ module.exports = {
         protectedPaths: []
       },
       jwt: {
+        protectedPaths: [],
         tokenHeaderName: 'x-access-token',
         tokenQueryName: 'token',
-        tokenObjectName: 'sessionJWT',
         expiresIn: 86400,
         ignoreExpiration: false,
         secretkey: 'sup3rs3cr3tp4ssw0rd'
       },
       kst: {
+        protectedPaths: [],
         keyHeaderName: 'Auth-Key',
         nonceHeaderName: 'Auth-Nonce',
         timestampHeaderName: 'Auth-Timestamp',
