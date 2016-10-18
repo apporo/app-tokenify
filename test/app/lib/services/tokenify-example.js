@@ -37,6 +37,14 @@ var Service = function(params) {
     res.json({ status: 200, message: 'authorized' });
   });
 
+  router_httpauth.route('/session-info').get(function(req, res, next) {
+    if (lodash.isObject(req[pluginCfg.sessionObjectName])) {
+      res.json(req[pluginCfg.sessionObjectName]);
+    } else {
+      res.status(404).json({});
+    }
+  });
+
   router_httpauth.route('/*').get(function(req, res, next) {
     debuglog.isEnabled && debuglog(' - request /httpauth public resources ...');
     res.json({ status: 200, message: 'public' });

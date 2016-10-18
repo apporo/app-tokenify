@@ -19,3 +19,5 @@ Feature: Authentication using HTTP-Auth
       | { "realm": "mycompany", "username": "apiuser", "password": "dobietday" } | 200 | {"status": 0, "permissions": ["perm1", "perm2"]} |
     When I send a request to '/tokenify/httpauth/authorized' with username 'mycompany/apiuser' and password 'dobietday' in 'basic' mode
     Then the response has statusCode '200' and contains the object '{ "status": 200, "message": "authorized" }'
+    When I send a request to '/tokenify/httpauth/session-info' with username 'mycompany/apiuser' and password 'dobietday' in 'basic' mode
+    Then the response has statusCode '200' and contains the object '{"user":{"realm":"mycompany","username":"apiuser","store":"restEntrypointStore","permissions":["perm1","perm2"]}}'

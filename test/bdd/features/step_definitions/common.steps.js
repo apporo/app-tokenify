@@ -41,6 +41,38 @@ module.exports = function() {
     });
   });
 
+  this.When(/^I send a request to '([^']*)'$/, function (requestPath) {
+    var self = this;
+    return Promise.reduce([
+      function(p, done) {
+        var requestOpts = {
+          method: 'GET',
+          url: self.applicationUrl + requestPath,
+          json: true
+        };
+        self.request(requestOpts, function(err, response, body) {
+          if (err) {
+            debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', requestPath, JSON.stringify(err));
+            return done(err, p);
+          }
+          debuglog.isEnabled && debuglog(' - return from [%s]: %s; statusCode: %s', requestPath, JSON.stringify(body), response.statusCode);
+          p.responseCode = response.statusCode;
+          p.responseBody = body || {};
+          return done(null, p);
+        });
+      },
+      function(p, done) {
+        debuglog.isEnabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
+        lodash.assign(self, lodash.pick(p, ['responseCode', 'responseBody']));
+        setTimeout(function() {
+          done(null, p);
+        }, 1000);
+      }
+    ], function(current, step) {
+      return Promise.promisify(step)(current);
+    }, {});
+  });
+
   this.When(/^I send a request to '([^']*)' with username '([^']*)' and password '([^']*)' in '([^']*)' mode$/, function (testpath, username, password, authMode) {
     var self = this;
     return Promise.reduce([
