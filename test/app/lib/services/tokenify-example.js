@@ -30,13 +30,47 @@ var Service = function(params) {
 
   var contextPath = pluginCfg.contextPath || '/tokenify';
 
-  var router_httpauth = express.Router();
+  var router_jwt = express.Router();
+  router_jwt.route('/authorized').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /jwt/authorized ...');
+    res.json({ status: 200, message: 'authorized' });
+  });
+  router_jwt.route('/session-info').get(function(req, res, next) {
+    if (lodash.isObject(req[pluginCfg.sessionObjectName])) {
+      res.json(req[pluginCfg.sessionObjectName]);
+    } else {
+      res.status(404).json({});
+    }
+  });
+  router_jwt.route('/*').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /jwt public resources ...');
+    res.json({ status: 200, message: 'public' });
+  });
+  webserverTrigger.inject(router_jwt, contextPath + '/jwt', position.inRangeOfMiddlewares(9), 'app-tokenify-example-jwt');
 
+  var router_kst = express.Router();
+  router_kst.route('/authorized').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /kst/authorized ...');
+    res.json({ status: 200, message: 'authorized' });
+  });
+  router_kst.route('/session-info').get(function(req, res, next) {
+    if (lodash.isObject(req[pluginCfg.sessionObjectName])) {
+      res.json(req[pluginCfg.sessionObjectName]);
+    } else {
+      res.status(404).json({});
+    }
+  });
+  router_kst.route('/*').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /kst public resources ...');
+    res.json({ status: 200, message: 'public' });
+  });
+  webserverTrigger.inject(router_kst, contextPath + '/kst', position.inRangeOfMiddlewares(9), 'app-tokenify-example-kst');
+
+  var router_httpauth = express.Router();
   router_httpauth.route('/authorized').get(function(req, res, next) {
     debuglog.isEnabled && debuglog(' - request /httpauth/authorized ...');
     res.json({ status: 200, message: 'authorized' });
   });
-
   router_httpauth.route('/session-info').get(function(req, res, next) {
     if (lodash.isObject(req[pluginCfg.sessionObjectName])) {
       res.json(req[pluginCfg.sessionObjectName]);
@@ -44,12 +78,10 @@ var Service = function(params) {
       res.status(404).json({});
     }
   });
-
   router_httpauth.route('/*').get(function(req, res, next) {
     debuglog.isEnabled && debuglog(' - request /httpauth public resources ...');
     res.json({ status: 200, message: 'public' });
   });
-
   webserverTrigger.inject(router_httpauth, contextPath + '/httpauth', position.inRangeOfMiddlewares(9), 'app-tokenify-example-httpauth');
 
   self.getServiceInfo = function() {

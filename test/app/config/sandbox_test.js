@@ -9,10 +9,10 @@ module.exports = {
         protectedPaths: ['/tokenify/httpauth/session-info', '/tokenify/httpauth/authorized*']
       },
       jwt: {
-        protectedPaths: ['/tokenify/jwt/authorized*']
+        protectedPaths: ['/tokenify/jwt/session-info', '/tokenify/jwt/authorized*']
       },
       kst: {
-        protectedPaths: ['/tokenify/kst/authorized*']
+        protectedPaths: ['/tokenify/kst/session-info', '/tokenify/kst/authorized*']
       },
       fieldNameRef: {
         scope: 'realm',
