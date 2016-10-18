@@ -73,13 +73,13 @@ module.exports = function() {
     }, {});
   });
 
-  this.When(/^I send a request '([^']*)' to '([^']*)' with username '([^']*)' and password '([^']*)' in '([^']*)' mode$/, function (httpMethod, testpath, username, password, authMode) {
+  this.When(/^I send a request '([^']*)' to '([^']*)' with username '([^']*)' and password '([^']*)' in '([^']*)' mode$/, function (httpMethod, httpPath, username, password, authMode) {
     var self = this;
     return Promise.reduce([
       function(p, done) {
         var requestOpts = {
           method: httpMethod,
-          url: self.applicationUrl + testpath,
+          url: self.applicationUrl + httpPath,
           json: true,
           auth: {
             username: username,
@@ -89,10 +89,10 @@ module.exports = function() {
         };
         self.request(requestOpts, function(err, response, body) {
           if (err) {
-            debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', testpath, JSON.stringify(err));
+            debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', httpPath, JSON.stringify(err));
             return done(err, p);
           }
-          debuglog.isEnabled && debuglog(' - return from [%s]: %s; statusCode: %s', testpath, JSON.stringify(body), response.statusCode);
+          debuglog.isEnabled && debuglog(' - return from [%s]: %s; statusCode: %s', httpPath, JSON.stringify(body), response.statusCode);
           p.responseCode = response.statusCode;
           p.responseBody = body || {};
           return done(null, p);
@@ -108,6 +108,84 @@ module.exports = function() {
     ], function(current, step) {
       return Promise.promisify(step)(current);
     }, {});
+  });
+
+  this.When(/^I send a request '([^']*)' to '([^']*)' with a JSON object as the body: '([^']*)'$/, function (httpMethod, httpPath, httpBody) {
+    var self = this;
+    return Promise.reduce([
+      function(p, done) {
+        var jsonObject = JSON.parse(httpBody);
+        var requestOpts = {
+          method: httpMethod,
+          url: self.applicationUrl + httpPath,
+          json: true,
+          body: jsonObject
+        };
+        self.request(requestOpts, function(err, response, body) {
+          if (err) {
+            debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', httpPath, JSON.stringify(err));
+            return done(err, p);
+          }
+          debuglog.isEnabled && debuglog(' - return from [%s]: %s; statusCode: %s', httpPath, JSON.stringify(body), response.statusCode);
+          p.responseCode = response.statusCode;
+          p.responseBody = body || {};
+          return done(null, p);
+        });
+      },
+      function(p, done) {
+        debuglog.isEnabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
+        lodash.assign(self, lodash.pick(p, ['responseCode', 'responseBody']));
+        setTimeout(function() {
+          done(null, p);
+        }, 1000);
+      }
+    ], function(current, step) {
+      return Promise.promisify(step)(current);
+    }, {});
+  });
+
+  this.When(/^I send a request '([^']*)' to '([^']*)' with received token$/, function (httpMethod, httpPath) {
+    var self = this;
+    return Promise.reduce([
+      function(p, done) {
+        var requestOpts = {
+          method: httpMethod,
+          url: self.applicationUrl + httpPath,
+          json: true,
+          headers: {
+            'x-access-token': self.JWT
+          }
+        };
+        self.request(requestOpts, function(err, response, body) {
+          if (err) {
+            debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', httpPath, JSON.stringify(err));
+            return done(err, p);
+          }
+          debuglog.isEnabled && debuglog(' - return from [%s]: %s; statusCode: %s', httpPath, JSON.stringify(body), response.statusCode);
+          p.responseCode = response.statusCode;
+          p.responseBody = body || {};
+          return done(null, p);
+        });
+      },
+      function(p, done) {
+        debuglog.isEnabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
+        lodash.assign(self, lodash.pick(p, ['responseCode', 'responseBody']));
+        setTimeout(function() {
+          done(null, p);
+        }, 1000);
+      }
+    ], function(current, step) {
+      return Promise.promisify(step)(current);
+    }, {});
+  });
+
+  this.Then(/^the token is not empty and is stored in JWT field$/, function () {
+    var self = this;
+    return Promise.resolve().then(function() {
+      assert.isNotNull(self.responseBody.token);
+      self.JWT = self.responseBody.token;
+      return true;
+    });
   });
 
   this.Then(/^the response has statusCode '([^']*)' and contains the object '([^']*)'$/, function (statusCode, objectInStr) {

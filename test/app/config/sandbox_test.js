@@ -35,6 +35,7 @@ module.exports = {
           }
         ]
       },
+      entrypointStoreFile: require('path').join(__dirname, '../data/entrypointstore.json'),
       entrypointStoreRest: {
         sources: [
           {

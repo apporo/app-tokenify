@@ -1,0 +1,12 @@
+{
+	"entrypoints": [
+    {
+			"key": "operator",
+			"secret": "$2a$10$hl4zIIfRYkI752hmVSm5yutLmqDk6FFQcqTDBgZocXH5uTUosDUnm"
+		},
+		{
+			"key": "demouser",
+			"secret": "$2a$10$oWnKP2qCtqwau7klj8P4NeCAf9cAQGGamKtP8/biF03VAr5mamdd2"
+		}
+	]
+}
