@@ -30,25 +30,19 @@ var Service = function(params) {
 
   var contextPath = pluginCfg.contextPath || '/tokenify';
 
-  var router = express.Router();
+  var router_httpauth = express.Router();
 
-  router.route('/authorized').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /authorized ...');
-    res.json({
-      status: 200,
-      message: 'authorized'
-    });
+  router_httpauth.route('/authorized').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /httpauth/authorized ...');
+    res.json({ status: 200, message: 'authorized' });
   });
 
-  router.route('/').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request public path ...');
-    res.json({
-      status: 200,
-      message: 'public'
-    });
+  router_httpauth.route('/*').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /httpauth public resources ...');
+    res.json({ status: 200, message: 'public' });
   });
 
-  webserverTrigger.inject(router, contextPath + '/httpauth', position.inRangeOfMiddlewares(9), 'app-tokenify-example');
+  webserverTrigger.inject(router_httpauth, contextPath + '/httpauth', position.inRangeOfMiddlewares(9), 'app-tokenify-example-httpauth');
 
   self.getServiceInfo = function() {
     return {};

@@ -24,6 +24,42 @@ var World = function World(callback) {
   debuglog.isEnabled && debuglog(' - Application Config: %s', JSON.stringify(app_conf));
 
   this.applicationUrl = util.format('http://%s%s', app_conf.baseHost, app_conf.contextPath);
+
+  this.parseMockServerMapping = function (objectArray) {
+    objectArray = objectArray || [];
+    return lodash.map(objectArray, function(object) {
+      try {
+        return {
+          requestBody: JSON.parse(object.requestBody),
+          responseBody: JSON.parse(object.responseBody),
+          responseCode: parseInt(object.responseCode)
+        }
+      } catch(exception) {
+        return {
+          requestBody: null,
+          responseBody: null,
+          responseCode: 500
+        }
+      }
+    });
+  };
+
+  this.parseMockServerResponse = function (objectArray) {
+    objectArray = objectArray || [];
+    return lodash.map(objectArray, function(object) {
+      try {
+        return {
+          responseCode: parseInt(object.responseCode),
+          responseBody: JSON.parse(object.responseBody)
+        }
+      } catch(exception) {
+        return {
+          responseCode: 500,
+          responseBody: null
+        }
+      }
+    });
+  };
 };
 
 module.exports.World = World;

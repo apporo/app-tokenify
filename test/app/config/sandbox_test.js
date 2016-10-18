@@ -8,6 +8,17 @@ module.exports = {
       httpauth: {
         protectedPaths: ['/tokenify/httpauth/authorized*']
       },
+      jwt: {
+        protectedPaths: ['/tokenify/jwt/authorized*']
+      },
+      kst: {
+        protectedPaths: ['/tokenify/kst/authorized*']
+      },
+      fieldNameRef: {
+        scope: 'realm',
+        key: 'username',
+        secret: 'password'
+      },
       entrypointStore: {
         entrypoints: [
           {
@@ -21,6 +32,18 @@ module.exports = {
           {
             "key": "static3",
             "secret": "$2a$10$dmjbCNaf5RA3mlJ2558bUe6k8FviQdXgLOHrbzfzsppqKgJLGyGOK"
+          }
+        ]
+      },
+      entrypointStoreRest: {
+        sources: [
+          {
+            enabled: true,
+            url: 'http://localhost:9000/auth',
+            auth: {
+              type: 'none'
+            },
+            transform: function(response) { return response; }
           }
         ]
       }

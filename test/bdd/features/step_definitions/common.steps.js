@@ -11,6 +11,36 @@ var assert = require('chai').assert;
 module.exports = function() {
   this.World = require('../support/world.js').World;
 
+  this.Given(/^a mock rest server provides method '([^']*)' on path '([^']*)' with the mapping$/, function (method, authpath, table) {
+    var self = this;
+    var rds = self.parseMockServerMapping(table.hashes());
+    var resItem = rds.length > 0 ? rds[0] : { responseCode: 500, responseBody: null };
+    return Promise.resolve().then(function() {
+      self.serverMock.on({
+        method: 'POST',
+        path: '/auth',
+        reply: {
+          status: resItem.responseCode,
+          headers: { "content-type": "application/json" },
+          body: function(req, reply) {
+            var body = [];
+            req.on('data', function(chunk) {
+              body.push(chunk);
+            }).on('end', function() {
+              body = Buffer.concat(body).toString();
+              Promise.resolve().then(function() {
+                return (body = JSON.parse(body));
+              }).then(function(bodyJson) {
+                assert.isTrue(lodash.isMatch(bodyJson, resItem.requestBody));
+                return reply(JSON.stringify(resItem.responseBody));
+              });
+            });
+          }
+        }
+      });
+    });
+  });
+
   this.When(/^I send a request to '([^']*)' with username '([^']*)' and password '([^']*)' in '([^']*)' mode$/, function (testpath, username, password, authMode) {
     var self = this;
     return Promise.reduce([
