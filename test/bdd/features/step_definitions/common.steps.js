@@ -11,14 +11,14 @@ var assert = require('chai').assert;
 module.exports = function() {
   this.World = require('../support/world.js').World;
 
-  this.Given(/^a mock rest server provides method '([^']*)' on path '([^']*)' with the mapping$/, function (method, authpath, table) {
+  this.Given(/^a mock rest server provides method '([^']*)' on path '([^']*)' with the mapping$/, function (httpMethod, httpPath, table) {
     var self = this;
     var rds = self.parseMockServerMapping(table.hashes());
     var resItem = rds.length > 0 ? rds[0] : { responseCode: 500, responseBody: null };
     return Promise.resolve().then(function() {
       self.serverMock.on({
-        method: 'POST',
-        path: '/auth',
+        method: httpMethod || 'POST',
+        path: httpPath || '/auth',
         reply: {
           status: resItem.responseCode,
           headers: { "content-type": "application/json" },
@@ -41,12 +41,12 @@ module.exports = function() {
     });
   });
 
-  this.When(/^I send a request to '([^']*)'$/, function (requestPath) {
+  this.When(/^I send a request '([^']*)' to '([^']*)'$/, function (httpMethod, requestPath) {
     var self = this;
     return Promise.reduce([
       function(p, done) {
         var requestOpts = {
-          method: 'GET',
+          method: httpMethod || 'GET',
           url: self.applicationUrl + requestPath,
           json: true
         };
@@ -73,12 +73,12 @@ module.exports = function() {
     }, {});
   });
 
-  this.When(/^I send a request to '([^']*)' with username '([^']*)' and password '([^']*)' in '([^']*)' mode$/, function (testpath, username, password, authMode) {
+  this.When(/^I send a request '([^']*)' to '([^']*)' with username '([^']*)' and password '([^']*)' in '([^']*)' mode$/, function (httpMethod, testpath, username, password, authMode) {
     var self = this;
     return Promise.reduce([
       function(p, done) {
         var requestOpts = {
-          method: 'GET',
+          method: httpMethod,
           url: self.applicationUrl + testpath,
           json: true,
           auth: {
