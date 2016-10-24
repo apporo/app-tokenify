@@ -192,6 +192,8 @@ module.exports = function() {
     var self = this;
     return Promise.resolve().then(function() {
       assert.equal(self.responseCode, statusCode);
+      debuglog.isEnabled && debuglog(' - self.responseBody: %s', JSON.stringify(self.responseBody));
+      debuglog.isEnabled && debuglog(' - expectedObject: %s', JSON.stringify(JSON.parse(objectInStr)));
       assert.isTrue(lodash.isMatch(self.responseBody, JSON.parse(objectInStr)));
       return true;
     });

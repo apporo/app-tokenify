@@ -27,7 +27,6 @@ module.exports = {
         key: 'key',
         secret: 'secret'
       },
-      protectedPaths: [],
       entrypointStore: {
         entrypoints: [
           {

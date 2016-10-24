@@ -16,8 +16,8 @@ Feature: Authentication using HTTP-Auth
   Scenario: Request with basic authentication using valid username/password from REST API
     Given a mock rest server provides method 'POST' on path '/auth' with the mapping
       | requestBody | responseCode | responseBody |
-      | { "realm": "mycompany", "username": "apiuser", "password": "dobietday" } | 200 | {"status": 0, "permissions": ["perm1", "perm2"]} |
+      | { "realm": "mycompany", "username": "apiuser", "password": "dobietday" } | 200 | {"status": 0, "permissions": ["perm1", "perm2"], "settings": {"key1": "value1", "key2": "value2"}} |
     When I send a request 'GET' to '/tokenify/httpauth/authorized' with username 'mycompany/apiuser' and password 'dobietday' in 'basic' mode
     Then the response has statusCode '200' and contains the object '{ "status": 200, "message": "authorized" }'
     When I send a request 'GET' to '/tokenify/httpauth/session-info' with username 'mycompany/apiuser' and password 'dobietday' in 'basic' mode
-    Then the response has statusCode '200' and contains the object '{"user":{"realm":"mycompany","username":"apiuser","store":"restEntrypointStore","permissions":["perm1","perm2"]}}'
+    Then the response has statusCode '200' and contains the object '{"user":{"realm":"mycompany","username":"apiuser","store":"restEntrypointStore", "permissions":["perm1","perm2"], "settings": {"key1": "value1", "key2": "value2"}}}'
