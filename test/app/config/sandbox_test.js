@@ -14,6 +14,9 @@ module.exports = {
       kst: {
         protectedPaths: ['/tokenify/kst/session-info', '/tokenify/kst/authorized*']
       },
+      mix: {
+        protectedPaths: ['/tokenify/mix/session-info', '/tokenify/mix/authorized*']
+      },
       fieldNameRef: {
         scope: 'realm',
         key: 'username',

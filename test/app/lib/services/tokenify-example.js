@@ -30,6 +30,24 @@ var Service = function(params) {
 
   var contextPath = pluginCfg.contextPath || '/tokenify';
 
+  var router_httpauth = express.Router();
+  router_httpauth.route('/authorized').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /httpauth/authorized ...');
+    res.json({ status: 200, message: 'authorized' });
+  });
+  router_httpauth.route('/session-info').get(function(req, res, next) {
+    if (lodash.isObject(req[pluginCfg.sessionObjectName])) {
+      res.json(req[pluginCfg.sessionObjectName]);
+    } else {
+      res.status(404).json({});
+    }
+  });
+  router_httpauth.route('/*').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /httpauth public resources ...');
+    res.json({ status: 200, message: 'public' });
+  });
+  webserverTrigger.inject(router_httpauth, contextPath + '/httpauth', position.inRangeOfMiddlewares(9), 'app-tokenify-example-httpauth');
+
   var router_jwt = express.Router();
   router_jwt.route('/authorized').get(function(req, res, next) {
     debuglog.isEnabled && debuglog(' - request /jwt/authorized ...');
@@ -66,23 +84,23 @@ var Service = function(params) {
   });
   webserverTrigger.inject(router_kst, contextPath + '/kst', position.inRangeOfMiddlewares(9), 'app-tokenify-example-kst');
 
-  var router_httpauth = express.Router();
-  router_httpauth.route('/authorized').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /httpauth/authorized ...');
+  var router_mix = express.Router();
+  router_mix.route('/authorized').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /mix/authorized ...');
     res.json({ status: 200, message: 'authorized' });
   });
-  router_httpauth.route('/session-info').get(function(req, res, next) {
+  router_mix.route('/session-info').get(function(req, res, next) {
     if (lodash.isObject(req[pluginCfg.sessionObjectName])) {
       res.json(req[pluginCfg.sessionObjectName]);
     } else {
       res.status(404).json({});
     }
   });
-  router_httpauth.route('/*').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /httpauth public resources ...');
+  router_mix.route('/*').get(function(req, res, next) {
+    debuglog.isEnabled && debuglog(' - request /mix public resources ...');
     res.json({ status: 200, message: 'public' });
   });
-  webserverTrigger.inject(router_httpauth, contextPath + '/httpauth', position.inRangeOfMiddlewares(9), 'app-tokenify-example-httpauth');
+  webserverTrigger.inject(router_mix, contextPath + '/mix', position.inRangeOfMiddlewares(9), 'app-tokenify-example-mix');
 
   self.getServiceInfo = function() {
     return {};

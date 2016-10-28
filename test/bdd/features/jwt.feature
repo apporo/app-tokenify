@@ -1,4 +1,4 @@
-Feature: Authentication using JWT
+Feature: JWT Authentication
 
   Scenario: Request with JWT authentication using static username/password
     When I send a request 'POST' to '/tokenify/auth' with a JSON object as the body: '{"username": "operator", "password": "dobietday"}'
