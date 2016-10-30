@@ -15,6 +15,7 @@ module.exports = {
         protectedPaths: ['/tokenify/kst/session-info', '/tokenify/kst/authorized*']
       },
       mix: {
+        authMethods: ["httpauth","jwt"],
         protectedPaths: ['/tokenify/mix/session-info', '/tokenify/mix/authorized*']
       },
       fieldNameRef: {

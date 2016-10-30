@@ -6,6 +6,9 @@
     "env": {
       "NODE_DEVEBOT_PROFILE": "testbdd",
       "NODE_DEVEBOT_SANDBOX": "test"
+    },
+    "env_debug": {
+      "DEBUG": "devebot*,app*"
     }
   }]
 }
