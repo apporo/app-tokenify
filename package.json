@@ -1,6 +1,6 @@
 {
   "name": "app-tokenify",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Devebot token-based authentication layerware",
   "main": "index.js",
   "scripts": {
@@ -15,14 +15,14 @@
   "author": "apporo",
   "license": "ISC",
   "peerDependencies": {
-    "app-webserver": "^0.1.9",
-    "devebot": "^0.1.22"
+    "app-webserver": "^0.1.13",
+    "devebot": "^0.1.23"
   },
   "dependencies": {
-    "app-webserver": "^0.1.9",
+    "app-webserver": "^0.1.13",
     "basic-auth": "^1.0.4",
     "bcryptjs": "^2.3.0",
-    "devebot": "^0.1.22",
+    "devebot": "^0.1.23",
     "jsonwebtoken": "^7.1.9",
     "request": "^2.75.0"
   },
