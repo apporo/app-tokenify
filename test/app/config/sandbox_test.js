@@ -14,10 +14,17 @@ module.exports = {
       kst: {
         protectedPaths: ['/tokenify/kst/session-info', '/tokenify/kst/authorized*']
       },
-      mix: {
-        authMethods: ["httpauth","jwt"],
-        protectedPaths: ['/tokenify/mix/session-info', '/tokenify/mix/authorized*']
-      },
+      mix: [
+        {
+          authMethods: ["httpauth","jwt"],
+          protectedPaths: ['/tokenify/mix1/session-info', '/tokenify/mix1/authorized*']
+        },
+        {
+          enabled: true,
+          authMethods: ["httpauth"],
+          protectedPaths: ['/tokenify/mix2/session-info', '/tokenify/mix2/authorized*']
+        }
+      ],
       fieldNameRef: {
         scope: 'realm',
         key: 'username',

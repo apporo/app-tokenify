@@ -84,23 +84,25 @@ var Service = function(params) {
   });
   webserverTrigger.inject(router_kst, contextPath + '/kst', position.inRangeOfMiddlewares(9), 'app-tokenify-example-kst');
 
-  var router_mix = express.Router();
-  router_mix.route('/authorized').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /mix/authorized ...');
-    res.json({ status: 200, message: 'authorized' });
+  ['mix1', 'mix2'].forEach(function(mixName) {
+    var router_mix = express.Router();
+    router_mix.route('/authorized').get(function(req, res, next) {
+      debuglog.isEnabled && debuglog(' - request /mix/authorized ...');
+      res.json({ status: 200, message: 'authorized' });
+    });
+    router_mix.route('/session-info').get(function(req, res, next) {
+      if (lodash.isObject(req[pluginCfg.sessionObjectName])) {
+        res.json(req[pluginCfg.sessionObjectName]);
+      } else {
+        res.status(404).json({});
+      }
+    });
+    router_mix.route('/*').get(function(req, res, next) {
+      debuglog.isEnabled && debuglog(' - request /mix public resources ...');
+      res.json({ status: 200, message: 'public' });
+    });
+    webserverTrigger.inject(router_mix, contextPath + '/' + mixName, position.inRangeOfMiddlewares(9), 'app-tokenify-example-' + mixName);
   });
-  router_mix.route('/session-info').get(function(req, res, next) {
-    if (lodash.isObject(req[pluginCfg.sessionObjectName])) {
-      res.json(req[pluginCfg.sessionObjectName]);
-    } else {
-      res.status(404).json({});
-    }
-  });
-  router_mix.route('/*').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /mix public resources ...');
-    res.json({ status: 200, message: 'public' });
-  });
-  webserverTrigger.inject(router_mix, contextPath + '/mix', position.inRangeOfMiddlewares(9), 'app-tokenify-example-mix');
 
   self.getServiceInfo = function() {
     return {};
