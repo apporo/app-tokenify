@@ -1,6 +1,6 @@
 {
   "name": "app-tokenify",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Devebot token-based authentication layerware",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,6 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "cucumber": "^1.3.1",
-    "mock-http-server": "0.0.4",
-    "nock": "^8.0.0"
+    "mock-http-server": "0.0.4"
   }
 }

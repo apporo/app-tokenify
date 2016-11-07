@@ -51,6 +51,23 @@ module.exports = {
             transform: function(response) { return response; }
           }
         ]
+      },
+      authorization: {
+        permissionPath: ['user', 'permissions'],
+        permissionExtractor: function(req) {
+          if (!req || !req.tokenify || !req.tokenify.user || !req.tokenify.user.permissions) {
+            return null;
+          }
+          return req.tokenify.user.permissions;
+        },
+        permissionRules: [
+          {
+            enabled: true,
+            url: '/tool(.*)',
+            methods: ['GET', 'POST'],
+            permission: 'user'
+          }
+        ]
       }
     }
   }

@@ -83,6 +83,11 @@ module.exports = {
             transform: function(response) { return response; }
           }
         ]
+      },
+      authorization: {
+        permissionPath: [],
+        permissionExtractor: function(req) { return []; },
+        permissionRules: []
       }
     }
   }
