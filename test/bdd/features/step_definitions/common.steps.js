@@ -188,13 +188,15 @@ module.exports = function() {
     });
   });
 
-  this.Then(/^the response has statusCode '([^']*)' and contains the object '([^']*)'$/, function (statusCode, objectInStr) {
+  this.Then(/^the response has statusCode '([^']*)' and contains the object '([^']*)'$/, function (statusCode, expectedBody) {
     var self = this;
+    statusCode = parseInt(statusCode);
+    expectedBody = JSON.parse(expectedBody);
     return Promise.resolve().then(function() {
       assert.equal(self.responseCode, statusCode);
       debuglog.isEnabled && debuglog(' - self.responseBody: %s', JSON.stringify(self.responseBody));
-      debuglog.isEnabled && debuglog(' - expectedObject: %s', JSON.stringify(JSON.parse(objectInStr)));
-      assert.isTrue(lodash.isMatch(self.responseBody, JSON.parse(objectInStr)));
+      debuglog.isEnabled && debuglog(' - expectedBody: %s', JSON.stringify(expectedBody));
+      assert.isTrue(lodash.isMatch(self.responseBody, expectedBody));
       return true;
     });
   });
