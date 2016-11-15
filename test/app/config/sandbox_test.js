@@ -5,6 +5,7 @@ module.exports = {
   },
   plugins: {
     appTokenify: {
+      contextPath: '/tokenify',
       sessionObjectName: 'tokenify',
       httpauth: {
         protectedPaths: ['/tokenify/httpauth/session-info', '/tokenify/httpauth/authorized*']
