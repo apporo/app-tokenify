@@ -26,6 +26,7 @@
     "bcryptjs": "^2.3.0",
     "devebot": "^0.1.23",
     "jsonwebtoken": "^7.1.9",
+    "node-cache": "^4.1.1",
     "request": "^2.75.0"
   },
   "devDependencies": {

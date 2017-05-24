@@ -52,7 +52,7 @@ module.exports = {
       entrypointStoreRest: {
         sources: [
           {
-            enabled: false,
+            enabled: true,
             url: 'http://localhost:9000/auth',
             auth: {
               type: 'none'
