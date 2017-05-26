@@ -1,13 +1,10 @@
 {
   "name": "app-tokenify",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Devebot token-based authentication layerware",
   "main": "index.js",
   "scripts": {
-    "pretest": "pm2 start test/app/process.json",
-    "test": "node_modules/.bin/cucumber.js test/bdd/features/${BDD_FILE:-*.feature}",
-    "posttest": "pm2 delete test/app/process.json",
-    "benchmark": "pm2 start test/app/process.json; node test/app/benchmark.js; pm2 delete test/app/process.json"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "devebot",
@@ -22,7 +19,6 @@
   "dependencies": {
     "app-webserver": "^0.1.13",
     "basic-auth": "^1.0.4",
-    "bcrypt": "^1.0.2",
     "bcryptjs": "^2.3.0",
     "devebot": "^0.1.23",
     "jsonwebtoken": "^7.1.9",

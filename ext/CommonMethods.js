@@ -3,7 +3,7 @@
 var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 module.exports = {
   authenticateOnHash: function(data, opts) {
@@ -12,7 +12,8 @@ module.exports = {
 
     var entrypointItem = this.entrypointHash[data[this.fieldNameRef.key]];
     if (entrypointItem) {
-      return bcrypt.compare(data[this.fieldNameRef.secret], entrypointItem.secret).then(function(ok) {
+      var bcrypt_compare = Promise.promisify(bcrypt.compare, {context: bcrypt});
+      return bcrypt_compare(data[this.fieldNameRef.secret], entrypointItem.secret).then(function(ok) {
         if (ok) {
           return {
             status: 0,
