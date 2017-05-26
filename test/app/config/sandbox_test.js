@@ -32,6 +32,7 @@ module.exports = {
         key: 'username',
         secret: 'password'
       },
+      secretEncrypted: false,
       entrypointStore: {
         entrypoints: [
           {
