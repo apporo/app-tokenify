@@ -7,7 +7,7 @@ var path = require('path');
 var Devebot = require('devebot');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('debug');
-var debuglog = debug('appTokenify:example');
+var debuglog = debug('example:appTokenify:example');
 
 var Service = function(params) {
   debuglog.isEnabled && debuglog(' + constructor begin ...');

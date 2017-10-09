@@ -22,7 +22,7 @@ module.exports = {
           protectedPaths: ['/tokenify/mix1/session-info', '/tokenify/mix1/authorized*']
         },
         {
-          enabled: true,
+          enabled: false,
           authMethods: ["httpauth"],
           protectedPaths: ['/tokenify/mix2/session-info', '/tokenify/mix2/authorized*']
         }
@@ -32,6 +32,7 @@ module.exports = {
         key: 'username',
         secret: 'password'
       },
+      secretEncrypted: false,
       entrypointStore: {
         entrypoints: [
           {
