@@ -14,13 +14,13 @@
   "license": "ISC",
   "peerDependencies": {
     "app-webserver": "^0.1.13",
-    "devebot": "^0.1.23"
+    "devebot": "^0.1.24"
   },
   "dependencies": {
     "app-webserver": "^0.1.13",
     "basic-auth": "^1.0.4",
     "bcryptjs": "^2.3.0",
-    "devebot": "^0.1.23",
+    "devebot": "^0.1.24",
     "jsonwebtoken": "^7.1.9",
     "node-cache": "^4.1.1",
     "request": "^2.75.0"
