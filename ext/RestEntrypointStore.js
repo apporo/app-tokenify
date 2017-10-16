@@ -8,14 +8,14 @@ var debug = Devebot.require('debug');
 var debuglog = debug('appTokenify:lib:RestEntrypointStore');
 var request = require('request');
 
-var RestEntrypointStore = function(params) {
+var RestEntrypointStore = function (params) {
   params = params || {};
 
   var sources = lodash.get(params, ['entrypointStoreRest', 'sources'], []);
-  sources = lodash.filter(sources, function(source) {
+  sources = lodash.filter(sources, function (source) {
     return (source.enabled != false);
   });
-  lodash.forEach(sources, function(source) {
+  lodash.forEach(sources, function (source) {
     if (lodash.isEmpty(source.requestOpts)) {
       debuglog.isEnabled && debuglog(' - requestOpts not found, creates a new one');
       var requestOpts = source.requestOpts = { url: source.url, method: 'POST', json: true };
@@ -27,18 +27,18 @@ var RestEntrypointStore = function(params) {
             sendImmediately: true
           };
         } else
-        if (source.auth.type == 'digest') {
-          requestOpts.auth = {
-            user: source.auth.config[source.auth.type].user,
-            pass: source.auth.config[source.auth.type].pass,
-            sendImmediately: false
-          };
-        } else
-        if (source.auth.type == 'bearer') {
-          requestOpts.auth = {
-            bearer: source.auth.config[source.auth.type].bearer || source.auth.config[source.auth.type].token
-          };
-        }
+          if (source.auth.type == 'digest') {
+            requestOpts.auth = {
+              user: source.auth.config[source.auth.type].user,
+              pass: source.auth.config[source.auth.type].pass,
+              sendImmediately: false
+            };
+          } else
+            if (source.auth.type == 'bearer') {
+              requestOpts.auth = {
+                bearer: source.auth.config[source.auth.type].bearer || source.auth.config[source.auth.type].token
+              };
+            }
       }
       if (source.ssl && source.ssl.type && source.ssl.config && source.ssl.config[source.ssl.type]) {
         if (source.ssl.type == 'cert') {
@@ -54,17 +54,17 @@ var RestEntrypointStore = function(params) {
           }
           requestOpts.agentOptions = clientCertOptions;
         } else
-        if (source.ssl.type == 'certserverside') {
-          var serverCertOptions = {
-            ca: fs.readFileSync(source.ssl.config[source.ssl.type].caFile),
-            cert: fs.readFileSync(source.ssl.config[source.ssl.type].certFile),
-            key: fs.readFileSync(source.ssl.config[source.ssl.type].keyFile)
+          if (source.ssl.type == 'certserverside') {
+            var serverCertOptions = {
+              ca: fs.readFileSync(source.ssl.config[source.ssl.type].caFile),
+              cert: fs.readFileSync(source.ssl.config[source.ssl.type].certFile),
+              key: fs.readFileSync(source.ssl.config[source.ssl.type].keyFile)
+            }
+            if (!lodash.isEmpty(source.ssl.config[source.ssl.type].passphrase)) {
+              serverCertOptions.passphrase = source.ssl.config[source.ssl.type].passphrase;
+            }
+            lodash.assign(requestOpts, serverCertOptions);
           }
-          if (!lodash.isEmpty(source.ssl.config[source.ssl.type].passphrase)) {
-            serverCertOptions.passphrase = source.ssl.config[source.ssl.type].passphrase;
-          }
-          lodash.assign(requestOpts, serverCertOptions);
-        }
       }
     } else {
       debuglog.isEnabled && debuglog(' - requestOpts has already existed');
@@ -72,18 +72,18 @@ var RestEntrypointStore = function(params) {
     debuglog.isEnabled && debuglog(' - source.requestOpts: %s', JSON.stringify(source.requestOpts));
   });
 
-  this.authenticate = function(credential, ctx) {
+  this.authenticate = function (credential, ctx) {
     if (lodash.isEmpty(sources)) {
       return Promise.reject({
         status: 2,
         message: 'Entrypoint source list is empty'
       });
     }
-    return Promise.any(sources.map(function(source) {
-      return new Promise(function(resolve, reject) {
+    return Promise.any(sources.map(function (source) {
+      return new Promise(function (resolve, reject) {
         var requestOpts = lodash.assign({ body: credential }, source.requestOpts);
         debuglog.isEnabled && debuglog(' - Post to [%s] a request object: %s', source.url, JSON.stringify(requestOpts));
-        request(requestOpts, function(err, response, body) {
+        request(requestOpts, function (err, response, body) {
           if (err) {
             debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', source.url, JSON.stringify(err));
             return reject({
@@ -107,7 +107,7 @@ var RestEntrypointStore = function(params) {
           return resolve(result);
         });
       });
-    })).catch(Promise.AggregateError, function(err) {
+    })).catch(Promise.AggregateError, function (err) {
       return Promise.resolve({
         status: -1,
         message: 'all of connections are failed',
