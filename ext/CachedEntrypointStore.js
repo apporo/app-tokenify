@@ -4,7 +4,7 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('debug');
-var debuglog = debug('appTokenify:lib:CachedEntrypointStore');
+var debugx = debug('appTokenify:lib:CachedEntrypointStore');
 var crypto = require('crypto');
 var NodeCache = require('node-cache');
 
@@ -28,10 +28,10 @@ var CachedEntrypointStore = function (params) {
   }
 
   this.authenticate = function (data, ctx) {
-    debuglog.isEnabled && debuglog('authenticate(%s)', JSON.stringify(data));
+    debugx.enabled && debugx('authenticate(%s)', JSON.stringify(data));
     var key = credentialKey(data);
     var obj = credentialCache.get(key);
-    debuglog.isEnabled && debuglog('authenticate() - cached data', JSON.stringify(obj));
+    debugx.enabled && debugx('authenticate() - cached data', JSON.stringify(obj));
     if (obj) {
       if (obj[this.fieldNameRef.secret] === hashCode(data[this.fieldNameRef.secret])) {
         obj.status = 0;
@@ -50,7 +50,7 @@ var CachedEntrypointStore = function (params) {
     var obj = lodash.pick(data, lodash.values(this.fieldNameRef));
     lodash.assign(obj, result);
     obj[this.fieldNameRef.secret] = hashCode(obj[this.fieldNameRef.secret]);
-    debuglog.isEnabled && debuglog('update() - [%s]: %s', key, JSON.stringify(obj));
+    debugx.enabled && debugx('update() - [%s]: %s', key, JSON.stringify(obj));
     credentialCache.set(key, obj);
   }
 }

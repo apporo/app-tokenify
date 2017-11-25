@@ -4,7 +4,7 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('debug');
-var debuglog = debug('appTokenify:lib:ConfigEntrypointStore');
+var debugx = debug('appTokenify:lib:ConfigEntrypointStore');
 
 var CommonMethods = require('./CommonMethods');
 

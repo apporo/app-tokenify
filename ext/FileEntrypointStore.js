@@ -5,7 +5,7 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('debug');
-var debuglog = debug('appTokenify:lib:FileEntrypointStore');
+var debugx = debug('appTokenify:lib:FileEntrypointStore');
 
 var CommonMethods = require('./CommonMethods');
 
@@ -19,9 +19,9 @@ var FileEntrypointStore = function(params) {
       store = JSON.parse(fs.readFileSync(configFile, 'utf8'));
     } catch (err) {
       if (err.code == 'ENOENT') {
-        debuglog.isEnabled && debuglog(' - entrypointStoreFile[%s] not found', configFile);
+        debugx.enabled && debugx(' - entrypointStoreFile[%s] not found', configFile);
       } else {
-        debuglog.isEnabled && debuglog(' - error: %s', JSON.stringify(err));
+        debugx.enabled && debugx(' - error: %s', JSON.stringify(err));
       }
     }
     return store;
