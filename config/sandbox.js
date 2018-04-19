@@ -4,6 +4,7 @@ module.exports = {
       enabled: true,
       contextPath: '/tokenify',
       sessionObjectName: 'tokenify',
+      tracingRequestName: 'requestId',
       httpauth: {
         protectedPaths: []
       },

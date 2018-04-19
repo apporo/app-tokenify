@@ -13,6 +13,7 @@ module.exports = {
     appTokenify: {
       contextPath: contextPath,
       sessionObjectName: sessionObjectName,
+      tracingRequestName: 'traceRequestId',
       httpauth: {
         protectedPaths: [contextPath + '/httpauth/session-info', contextPath + '/httpauth/authorized*']
       },
