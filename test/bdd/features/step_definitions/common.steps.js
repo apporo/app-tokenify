@@ -4,7 +4,7 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
-var debuglog = debug('appTokenify:test:bdd:steps:common');
+var debuglog = debug('app-tokenify:test:bdd:steps:common');
 
 var assert = require('chai').assert;
 

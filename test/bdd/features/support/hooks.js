@@ -5,7 +5,7 @@ var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 
 var debug = Devebot.require('pinbug');
-var debuglog = debug('appTokenify:test:bdd:hooks');
+var debuglog = debug('app-tokenify:test:bdd:hooks');
 
 var ServerMock = require("mock-http-server");
 

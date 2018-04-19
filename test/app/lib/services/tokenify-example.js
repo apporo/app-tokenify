@@ -7,7 +7,7 @@ var path = require('path');
 var Devebot = require('devebot');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
-var debuglog = debug('example:appTokenify:example');
+var debuglog = debug('example:app-tokenify:example');
 
 var Service = function(params) {
   debuglog.enabled && debuglog(' + constructor begin ...');
@@ -20,6 +20,7 @@ var Service = function(params) {
 
   var pluginCfg = lodash.get(params, ['sandboxConfig'], {});
   var contextPath = pluginCfg.contextPath || '/tokenify';
+  var layers = [];
 
   var router_httpauth = express.Router();
   router_httpauth.route('/authorized').get(function(req, res, next) {
@@ -36,6 +37,11 @@ var Service = function(params) {
   router_httpauth.route('/*').get(function(req, res, next) {
     debuglog.enabled && debuglog(' - request /httpauth public resources ...');
     res.json({ status: 200, message: 'public' });
+  });
+  layers.push({
+    name: 'app-tokenify-example-httpauth',
+    path: contextPath + '/httpauth',
+    middleware: router_httpauth
   });
 
   var router_jwt = express.Router();
@@ -54,6 +60,11 @@ var Service = function(params) {
     debuglog.enabled && debuglog(' - request /jwt public resources ...');
     res.json({ status: 200, message: 'public' });
   });
+  layers.push({
+    name: 'app-tokenify-example-jwt',
+    path: contextPath + '/jwt',
+    middleware: router_jwt
+  });
 
   var router_kst = express.Router();
   router_kst.route('/authorized').get(function(req, res, next) {
@@ -71,24 +82,11 @@ var Service = function(params) {
     debuglog.enabled && debuglog(' - request /kst public resources ...');
     res.json({ status: 200, message: 'public' });
   });
-
-  var layers = [
-    {
-      name: 'app-tokenify-example-httpauth',
-      path: contextPath + '/httpauth',
-      middleware: router_httpauth
-    },
-    {
-      name: 'app-tokenify-example-jwt',
-      path: contextPath + '/jwt',
-      middleware: router_jwt
-    },
-    {
-      name: 'app-tokenify-example-kst',
-      path: contextPath + '/kst',
-      middleware: router_kst
-    }
-  ];
+  layers.push({
+    name: 'app-tokenify-example-kst',
+    path: contextPath + '/kst',
+    middleware: router_kst
+  });
 
   ['mix1', 'mix2'].forEach(function(mixName) {
     var router_mix = express.Router();

@@ -4,7 +4,7 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
-var debugx = debug('appTokenify:lib:CachedEntrypointStore');
+var debugx = debug('app-tokenify:lib:CachedEntrypointStore');
 var crypto = require('crypto');
 var NodeCache = require('node-cache');
 

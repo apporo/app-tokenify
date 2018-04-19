@@ -5,7 +5,7 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
-var debugx = debug('appTokenify:lib:RestEntrypointStore');
+var debugx = debug('app-tokenify:lib:RestEntrypointStore');
 var request = require('request');
 
 var RestEntrypointStore = function (params) {

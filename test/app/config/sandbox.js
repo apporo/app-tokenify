@@ -1,31 +1,36 @@
+'use strict';
+
+var contextPath = '/tokenify';
+var sessionObjectName = 'tokenify';
+
 module.exports = {
   application: {
     baseHost: 'localhost:7979',
-    contextPath: '',
-    sessionObjectName: 'tokenify'
+    contextPath: contextPath,
+    sessionObjectName: sessionObjectName
   },
   plugins: {
     appTokenify: {
-      contextPath: '/tokenify',
-      sessionObjectName: 'tokenify',
+      contextPath: contextPath,
+      sessionObjectName: sessionObjectName,
       httpauth: {
-        protectedPaths: ['/tokenify/httpauth/session-info', '/tokenify/httpauth/authorized*']
+        protectedPaths: [contextPath + '/httpauth/session-info', contextPath + '/httpauth/authorized*']
       },
       jwt: {
-        protectedPaths: ['/tokenify/jwt/session-info', '/tokenify/jwt/authorized*']
+        protectedPaths: [contextPath + '/jwt/session-info', contextPath + '/jwt/authorized*']
       },
       kst: {
-        protectedPaths: ['/tokenify/kst/session-info', '/tokenify/kst/authorized*']
+        protectedPaths: [contextPath + '/kst/session-info', contextPath + '/kst/authorized*']
       },
       mix: [
         {
           authMethods: ["httpauth","jwt"],
-          protectedPaths: ['/tokenify/mix1/session-info', '/tokenify/mix1/authorized*']
+          protectedPaths: [contextPath + '/mix1/session-info', contextPath + '/mix1/authorized*']
         },
         {
           enabled: false,
           authMethods: ["httpauth"],
-          protectedPaths: ['/tokenify/mix2/session-info', '/tokenify/mix2/authorized*']
+          protectedPaths: [contextPath + '/mix2/session-info', contextPath + '/mix2/authorized*']
         }
       ],
       fieldNameRef: {

@@ -9,7 +9,7 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
-var debuglog = debug('appTokenify:test:bdd:world');
+var debuglog = debug('app-tokenify:test:bdd:world');
 var request = require('request');
 
 var app = require('../../../app/index.js');
