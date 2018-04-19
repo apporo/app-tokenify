@@ -6,7 +6,7 @@ var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
 var debugx = debug('app-tokenify:lib:ConfigEntrypointStore');
 
-var CommonMethods = require('./CommonMethods');
+var CommonMethods = require('./common-methods');
 
 var ConfigEntrypointStore = function(params) {
   params = params || {};
