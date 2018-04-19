@@ -117,6 +117,6 @@ var Service = function(params) {
   debuglog.enabled && debuglog(' - constructor end!');
 };
 
-Service.referenceList = ['tokenifyService', 'webweaverService']
+Service.referenceList = ['tokenifyService', 'webweaverService'];
 
 module.exports = Service;
