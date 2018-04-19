@@ -1,7 +1,8 @@
 module.exports = {
   application: {
     baseHost: 'localhost:7979',
-    contextPath: ''
+    contextPath: '',
+    sessionObjectName: 'tokenify'
   },
   plugins: {
     appTokenify: {

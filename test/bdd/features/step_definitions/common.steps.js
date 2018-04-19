@@ -3,7 +3,7 @@
 var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
-var debug = Devebot.require('debug');
+var debug = Devebot.require('pinbug');
 var debuglog = debug('appTokenify:test:bdd:steps:common');
 
 var assert = require('chai').assert;
@@ -52,17 +52,17 @@ module.exports = function() {
         };
         self.request(requestOpts, function(err, response, body) {
           if (err) {
-            debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', requestPath, JSON.stringify(err));
+            debuglog.enabled && debuglog(' - Request to [%s] failed. Error: %s', requestPath, JSON.stringify(err));
             return done(err, p);
           }
-          debuglog.isEnabled && debuglog(' - return from [%s]: %s; statusCode: %s', requestPath, JSON.stringify(body), response.statusCode);
+          debuglog.enabled && debuglog(' - return from [%s]: %s; statusCode: %s', requestPath, JSON.stringify(body), response.statusCode);
           p.responseCode = response.statusCode;
           p.responseBody = body || {};
           return done(null, p);
         });
       },
       function(p, done) {
-        debuglog.isEnabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
+        debuglog.enabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
         lodash.assign(self, lodash.pick(p, ['responseCode', 'responseBody']));
         setTimeout(function() {
           done(null, p);
@@ -89,17 +89,17 @@ module.exports = function() {
         };
         self.request(requestOpts, function(err, response, body) {
           if (err) {
-            debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', httpPath, JSON.stringify(err));
+            debuglog.enabled && debuglog(' - Request to [%s] failed. Error: %s', httpPath, JSON.stringify(err));
             return done(err, p);
           }
-          debuglog.isEnabled && debuglog(' - return from [%s]: %s; statusCode: %s', httpPath, JSON.stringify(body), response.statusCode);
+          debuglog.enabled && debuglog(' - return from [%s]: %s; statusCode: %s', httpPath, JSON.stringify(body), response.statusCode);
           p.responseCode = response.statusCode;
           p.responseBody = body || {};
           return done(null, p);
         });
       },
       function(p, done) {
-        debuglog.isEnabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
+        debuglog.enabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
         lodash.assign(self, lodash.pick(p, ['responseCode', 'responseBody']));
         setTimeout(function() {
           done(null, p);
@@ -123,17 +123,17 @@ module.exports = function() {
         };
         self.request(requestOpts, function(err, response, body) {
           if (err) {
-            debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', httpPath, JSON.stringify(err));
+            debuglog.enabled && debuglog(' - Request to [%s] failed. Error: %s', httpPath, JSON.stringify(err));
             return done(err, p);
           }
-          debuglog.isEnabled && debuglog(' - return from [%s]: %s; statusCode: %s', httpPath, JSON.stringify(body), response.statusCode);
+          debuglog.enabled && debuglog(' - return from [%s]: %s; statusCode: %s', httpPath, JSON.stringify(body), response.statusCode);
           p.responseCode = response.statusCode;
           p.responseBody = body || {};
           return done(null, p);
         });
       },
       function(p, done) {
-        debuglog.isEnabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
+        debuglog.enabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
         lodash.assign(self, lodash.pick(p, ['responseCode', 'responseBody']));
         setTimeout(function() {
           done(null, p);
@@ -158,17 +158,17 @@ module.exports = function() {
         };
         self.request(requestOpts, function(err, response, body) {
           if (err) {
-            debuglog.isEnabled && debuglog(' - Request to [%s] failed. Error: %s', httpPath, JSON.stringify(err));
+            debuglog.enabled && debuglog(' - Request to [%s] failed. Error: %s', httpPath, JSON.stringify(err));
             return done(err, p);
           }
-          debuglog.isEnabled && debuglog(' - return from [%s]: %s; statusCode: %s', httpPath, JSON.stringify(body), response.statusCode);
+          debuglog.enabled && debuglog(' - return from [%s]: %s; statusCode: %s', httpPath, JSON.stringify(body), response.statusCode);
           p.responseCode = response.statusCode;
           p.responseBody = body || {};
           return done(null, p);
         });
       },
       function(p, done) {
-        debuglog.isEnabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
+        debuglog.enabled && debuglog(' - Output: %s', JSON.stringify(p.responseBody));
         lodash.assign(self, lodash.pick(p, ['responseCode', 'responseBody']));
         setTimeout(function() {
           done(null, p);
@@ -193,9 +193,9 @@ module.exports = function() {
     statusCode = parseInt(statusCode);
     expectedBody = JSON.parse(expectedBody);
     return Promise.resolve().then(function() {
+      debuglog.enabled && debuglog(' - self.responseBody: %s', JSON.stringify(self.responseBody));
+      debuglog.enabled && debuglog(' - expectedBody: %s', JSON.stringify(expectedBody));
       assert.equal(self.responseCode, statusCode);
-      debuglog.isEnabled && debuglog(' - self.responseBody: %s', JSON.stringify(self.responseBody));
-      debuglog.isEnabled && debuglog(' - expectedBody: %s', JSON.stringify(expectedBody));
       assert.isTrue(lodash.isMatch(self.responseBody, expectedBody));
       return true;
     });

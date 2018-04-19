@@ -6,33 +6,24 @@ var path = require('path');
 
 var Devebot = require('devebot');
 var lodash = Devebot.require('lodash');
-var debug = Devebot.require('debug');
+var debug = Devebot.require('pinbug');
 var debuglog = debug('example:appTokenify:example');
 
 var Service = function(params) {
-  debuglog.isEnabled && debuglog(' + constructor begin ...');
+  debuglog.enabled && debuglog(' + constructor begin ...');
 
   params = params || {};
 
   var self = this;
 
-  self.logger = params.loggingFactory.getLogger();
+  var express = params.webweaverService.express;
 
-  self.getSandboxName = function() {
-    return params.sandboxName;
-  };
-
-  var webserverTrigger = params.webserverTrigger;
-  var express = webserverTrigger.getExpress();
-  var position = webserverTrigger.getPosition();
-
-  var pluginCfg = lodash.get(params, ['sandboxConfig', 'plugins', 'appTokenify'], {});
-
+  var pluginCfg = lodash.get(params, ['sandboxConfig'], {});
   var contextPath = pluginCfg.contextPath || '/tokenify';
 
   var router_httpauth = express.Router();
   router_httpauth.route('/authorized').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /httpauth/authorized ...');
+    debuglog.enabled && debuglog(' - request /httpauth/authorized ...');
     res.json({ status: 200, message: 'authorized' });
   });
   router_httpauth.route('/session-info').get(function(req, res, next) {
@@ -43,14 +34,13 @@ var Service = function(params) {
     }
   });
   router_httpauth.route('/*').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /httpauth public resources ...');
+    debuglog.enabled && debuglog(' - request /httpauth public resources ...');
     res.json({ status: 200, message: 'public' });
   });
-  webserverTrigger.inject(router_httpauth, contextPath + '/httpauth', position.inRangeOfMiddlewares(9), 'app-tokenify-example-httpauth');
 
   var router_jwt = express.Router();
   router_jwt.route('/authorized').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /jwt/authorized ...');
+    debuglog.enabled && debuglog(' - request /jwt/authorized ...');
     res.json({ status: 200, message: 'authorized' });
   });
   router_jwt.route('/session-info').get(function(req, res, next) {
@@ -61,14 +51,13 @@ var Service = function(params) {
     }
   });
   router_jwt.route('/*').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /jwt public resources ...');
+    debuglog.enabled && debuglog(' - request /jwt public resources ...');
     res.json({ status: 200, message: 'public' });
   });
-  webserverTrigger.inject(router_jwt, contextPath + '/jwt', position.inRangeOfMiddlewares(9), 'app-tokenify-example-jwt');
 
   var router_kst = express.Router();
   router_kst.route('/authorized').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /kst/authorized ...');
+    debuglog.enabled && debuglog(' - request /kst/authorized ...');
     res.json({ status: 200, message: 'authorized' });
   });
   router_kst.route('/session-info').get(function(req, res, next) {
@@ -79,15 +68,32 @@ var Service = function(params) {
     }
   });
   router_kst.route('/*').get(function(req, res, next) {
-    debuglog.isEnabled && debuglog(' - request /kst public resources ...');
+    debuglog.enabled && debuglog(' - request /kst public resources ...');
     res.json({ status: 200, message: 'public' });
   });
-  webserverTrigger.inject(router_kst, contextPath + '/kst', position.inRangeOfMiddlewares(9), 'app-tokenify-example-kst');
+
+  var layers = [
+    {
+      name: 'app-tokenify-example-httpauth',
+      path: contextPath + '/httpauth',
+      middleware: router_httpauth
+    },
+    {
+      name: 'app-tokenify-example-jwt',
+      path: contextPath + '/jwt',
+      middleware: router_jwt
+    },
+    {
+      name: 'app-tokenify-example-kst',
+      path: contextPath + '/kst',
+      middleware: router_kst
+    }
+  ];
 
   ['mix1', 'mix2'].forEach(function(mixName) {
     var router_mix = express.Router();
     router_mix.route('/authorized').get(function(req, res, next) {
-      debuglog.isEnabled && debuglog(' - request /mix/authorized ...');
+      debuglog.enabled && debuglog(' - request /mix/authorized ...');
       res.json({ status: 200, message: 'authorized' });
     });
     router_mix.route('/session-info').get(function(req, res, next) {
@@ -98,46 +104,21 @@ var Service = function(params) {
       }
     });
     router_mix.route('/*').get(function(req, res, next) {
-      debuglog.isEnabled && debuglog(' - request /mix public resources ...');
+      debuglog.enabled && debuglog(' - request /mix public resources ...');
       res.json({ status: 200, message: 'public' });
     });
-    webserverTrigger.inject(router_mix, contextPath + '/' + mixName, position.inRangeOfMiddlewares(9), 'app-tokenify-example-' + mixName);
+    layers.push({
+      name: 'app-tokenify-example-' + mixName,
+      path: contextPath + '/' + mixName,
+      middleware: router_mix
+    });
   });
 
-  self.getServiceInfo = function() {
-    return {};
-  };
+  params.tokenifyService.push(layers);
 
-  self.getServiceHelp = function() {
-    return {};
-  };
-
-  debuglog.isEnabled && debuglog(' - constructor end!');
+  debuglog.enabled && debuglog(' - constructor end!');
 };
 
-Service.argumentSchema = {
-  "id": "tokenifyExample",
-  "type": "object",
-  "properties": {
-    "sandboxName": {
-      "type": "string"
-    },
-    "sandboxConfig": {
-      "type": "object"
-    },
-    "profileConfig": {
-      "type": "object"
-    },
-    "generalConfig": {
-      "type": "object"
-    },
-    "loggingFactory": {
-      "type": "object"
-    },
-    "webserverTrigger": {
-      "type": "object"
-    }
-  }
-};
+Service.referenceList = ['tokenifyService', 'webweaverService']
 
 module.exports = Service;

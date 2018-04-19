@@ -1,96 +1,36 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "app-tokenify@^0.2.0",
-        "scope": null,
-        "escapedName": "app-tokenify",
-        "name": "app-tokenify",
-        "rawSpec": "^0.2.0",
-        "spec": ">=0.2.0 <0.3.0",
-        "type": "range"
-      },
-      "/home/drupalex/projects/qupworld/datasilo-aws/ReportAPI"
-    ]
-  ],
-  "_from": "app-tokenify@>=0.2.0 <0.3.0",
-  "_id": "app-tokenify@0.2.0",
-  "_inCache": true,
-  "_location": "/app-tokenify",
-  "_nodeVersion": "6.9.5",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/app-tokenify-0.2.0.tgz_1510117805435_0.6977232694625854"
-  },
-  "_npmUser": {
-    "name": "apporo",
-    "email": "apporo@devebot.com"
-  },
-  "_npmVersion": "3.10.10",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "app-tokenify@^0.2.0",
-    "scope": null,
-    "escapedName": "app-tokenify",
-    "name": "app-tokenify",
-    "rawSpec": "^0.2.0",
-    "spec": ">=0.2.0 <0.3.0",
-    "type": "range"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/app-tokenify/-/app-tokenify-0.2.0.tgz",
-  "_shasum": "cb04689a03f1bfcb59995091b1bf656ac2eab3de",
-  "_shrinkwrap": null,
-  "_spec": "app-tokenify@^0.2.0",
-  "_where": "/home/drupalex/projects/qupworld/datasilo-aws/ReportAPI",
+  "name": "app-tokenify",
+  "version": "0.2.1",
+  "description": "Devebot token-based authentication layerware",
+  "license": "MIT",
+  "homepage": "https://github.com/apporo/app-tokenify.git",
   "author": {
-    "name": "apporo"
+    "name": "apporo",
+    "email": "apporo@devebot.com",
+    "url": "https://github.com/apporo"
+  },
+  "main": "index.js",
+  "peerDependencies": {
+    "app-webweaver": "^0.2.2",
+    "devebot": "^0.2.6"
   },
   "dependencies": {
-    "app-webweaver": "^0.2.1",
+    "app-webweaver": "^0.2.2",
     "basic-auth": "^1.0.4",
     "bcryptjs": "^2.3.0",
-    "devebot": "^0.2.1",
+    "devebot": "^0.2.6",
     "jsonwebtoken": "^7.1.9",
     "node-cache": "^4.1.1",
     "request": "^2.75.0"
   },
-  "description": "Devebot token-based authentication layerware",
   "devDependencies": {
     "benchmark": "^2.1.4",
     "chai": "^3.5.0",
     "cucumber": "^1.3.1",
     "mock-http-server": "0.0.4"
   },
-  "directories": {},
-  "dist": {
-    "shasum": "cb04689a03f1bfcb59995091b1bf656ac2eab3de",
-    "tarball": "https://registry.npmjs.org/app-tokenify/-/app-tokenify-0.2.0.tgz"
-  },
-  "gitHead": "b7eff979f1f78a0baf255c25cd80a97843940ee8",
   "keywords": [
     "devebot",
     "devebot-plugin"
-  ],
-  "license": "ISC",
-  "main": "index.js",
-  "maintainers": [
-    {
-      "name": "apporo",
-      "email": "apporo@devebot.com"
-    }
-  ],
-  "name": "app-tokenify",
-  "optionalDependencies": {},
-  "peerDependencies": {
-    "app-webweaver": "^0.2.1",
-    "devebot": "^0.2.1"
-  },
-  "readme": "ERROR: No README data found!",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "version": "0.2.0"
+  ]
 }

@@ -4,7 +4,7 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 
-var debug = Devebot.require('debug');
+var debug = Devebot.require('pinbug');
 var debuglog = debug('appTokenify:test:bdd:hooks');
 
 var ServerMock = require("mock-http-server");
@@ -16,13 +16,13 @@ var globalHooks = function () {
 
   this.Before(function (scenario, callback) {
     this.serverMock = new ServerMock({ host: "localhost", port: 9000 });
-    debuglog.isEnabled && debuglog(' -> start mock-http-server before scenario');
+    debuglog.enabled && debuglog(' -> start mock-http-server before scenario');
     this.serverMock.start(callback);
   });
 
   this.After(function (scenario, callback) {
     this.serverMock.stop(callback);
-    debuglog.isEnabled && debuglog(' -> stop mock-http-server after scenario');
+    debuglog.enabled && debuglog(' -> stop mock-http-server after scenario');
   });
 };
 
