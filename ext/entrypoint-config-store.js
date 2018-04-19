@@ -4,11 +4,11 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
-var debugx = debug('app-tokenify:lib:ConfigEntrypointStore');
+var debugx = debug('app-tokenify:lib:EntrypointConfigStore');
 
 var CommonMethods = require('./common-methods');
 
-var ConfigEntrypointStore = function(params) {
+var EntrypointConfigStore = function(params) {
   params = params || {};
   this.fieldNameRef = params.fieldNameRef;
 
@@ -24,4 +24,4 @@ var ConfigEntrypointStore = function(params) {
   this.getApiSecret = CommonMethods.getApiSecretOnHash.bind(this);
 };
 
-module.exports = ConfigEntrypointStore;
+module.exports = EntrypointConfigStore;

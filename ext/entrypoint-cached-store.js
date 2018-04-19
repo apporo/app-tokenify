@@ -4,11 +4,11 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
-var debugx = debug('app-tokenify:lib:CachedEntrypointStore');
+var debugx = debug('app-tokenify:lib:EntrypointCachedStore');
 var crypto = require('crypto');
 var NodeCache = require('node-cache');
 
-var CachedEntrypointStore = function (params) {
+var EntrypointCachedStore = function (params) {
   params = params || {};
   var self = this;
   this.fieldNameRef = params.fieldNameRef;
@@ -55,4 +55,4 @@ var CachedEntrypointStore = function (params) {
   }
 }
 
-module.exports = CachedEntrypointStore;
+module.exports = EntrypointCachedStore;

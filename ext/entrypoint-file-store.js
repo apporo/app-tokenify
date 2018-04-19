@@ -5,15 +5,15 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
-var debugx = debug('app-tokenify:lib:FileEntrypointStore');
+var debugx = debug('app-tokenify:lib:EntrypointFileStore');
 
 var CommonMethods = require('./common-methods');
 
-var FileEntrypointStore = function(params) {
+var EntrypointFileStore = function(params) {
   params = params || {};
   this.fieldNameRef = params.fieldNameRef;
 
-  var readEntrypointStoreFile = function(configFile, context) {
+  var readEntrypointFileStore = function(configFile, context) {
     var store = {};
     try {
       store = JSON.parse(fs.readFileSync(configFile, 'utf8'));
@@ -27,7 +27,7 @@ var FileEntrypointStore = function(params) {
     return store;
   };
 
-  var entrypointStore = readEntrypointStoreFile(params.entrypointStoreFile);
+  var entrypointStore = readEntrypointFileStore(params.entrypointStoreFile);
   var entrypointList = entrypointStore.entrypoints || [];
   if (!lodash.isArray(entrypointList)) entrypointList = [];
   entrypointList = lodash.filter(entrypointList, function(item) {
@@ -39,4 +39,4 @@ var FileEntrypointStore = function(params) {
   this.getApiSecret = CommonMethods.getApiSecretOnHash.bind(this);
 };
 
-module.exports = FileEntrypointStore;
+module.exports = EntrypointFileStore;

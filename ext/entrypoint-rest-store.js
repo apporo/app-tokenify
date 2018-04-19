@@ -5,10 +5,10 @@ var Devebot = require('devebot');
 var Promise = Devebot.require('bluebird');
 var lodash = Devebot.require('lodash');
 var debug = Devebot.require('pinbug');
-var debugx = debug('app-tokenify:lib:RestEntrypointStore');
+var debugx = debug('app-tokenify:lib:EntrypointRestStore');
 var request = require('request');
 
-var RestEntrypointStore = function (params) {
+var EntrypointRestStore = function (params) {
   params = params || {};
 
   var sources = lodash.get(params, ['entrypointStoreRest', 'sources'], []);
@@ -117,4 +117,4 @@ var RestEntrypointStore = function (params) {
   };
 };
 
-module.exports = RestEntrypointStore;
+module.exports = EntrypointRestStore;
